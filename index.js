@@ -57,9 +57,6 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={AppContainer}>
-        <Route path='foo' component={AppContainer}/>
-        <Route path='bar' component={AppContainer}/>
-        <Route path='*' component={AppContainer}/>
       </Route>
     </Router>
   </Provider>,
