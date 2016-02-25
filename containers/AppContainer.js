@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { PureComponent } from 'react-pure-render'
 
 export default class AppContainer extends PureComponent {

@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, Route, browserHistory } from 'react-router'
-import { syncHistory } from 'react-router-redux'
+import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
@@ -12,7 +12,7 @@ import AppContainer from './containers/AppContainer'
 import './styles/index.css'
 
 const dev = process.env.NODE_ENV !== 'production'
-const reduxRouterMiddleware = syncHistory(browserHistory)
+const reduxRouterMiddleware = routerMiddleware(browserHistory)
 
 let middleware = [
   thunkMiddleware,
@@ -47,15 +47,11 @@ function configureStore(initialState) {
 }
 
 const store = configureStore()
-
-if (dev) {
-  // required for replaying actions from devtools to work
-  reduxRouterMiddleware.listenForReplays(store)
-}
+const history = syncHistoryWithStore(browserHistory, store)
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory}>
+    <Router history={history}>
       <Route path='/' component={AppContainer}>
       </Route>
     </Router>
