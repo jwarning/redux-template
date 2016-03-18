@@ -1,6 +1,7 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
+    "font-family-name-quotes": "single-where-recommended",
     "indentation": 2,
     "string-quotes": "single"
   }

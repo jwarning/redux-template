@@ -1,4 +1,5 @@
 var extractText = require('extract-text-webpack-plugin')
+var htmlWebpackPlugin = require('html-webpack-plugin')
 var path = require('path')
 var cssnext = require('postcss-cssnext')
 var cssImport = require('postcss-import')
@@ -14,10 +15,14 @@ var config = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/dist/'
+    publicPath: dev ? '/dist/' : ''
   },
   plugins: [
-    new extractText('bundle.css')
+    new extractText('bundle.css'),
+    new htmlWebpackPlugin({
+      template: 'index.html',
+      hash: true
+    })
   ],
   postcss: function(webpack) {
     return [
@@ -34,6 +39,12 @@ var config = {
         query: {
           presets: dev ? ['react-hmre'] : []
         },
+        exclude: /node_modules/,
+        include: __dirname
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader',
         exclude: /node_modules/,
         include: __dirname
       },

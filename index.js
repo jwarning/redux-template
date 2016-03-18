@@ -13,23 +13,18 @@ import './styles/index.css'
 
 const dev = process.env.NODE_ENV !== 'production'
 const reduxRouterMiddleware = routerMiddleware(browserHistory)
-
-let middleware = [
+const middleware = [
   thunkMiddleware,
   reduxRouterMiddleware
 ]
-
-if (dev) {
-  // only use logger in development mode
-  middleware.push(createLogger())
-}
 
 function configureStore(initialState) {
   const store = createStore(
     rootReducer,
     initialState,
     compose(
-      applyMiddleware(...middleware),
+      // only use logger and debugger in development mode
+      applyMiddleware(...middleware.concat(dev ? createLogger() : [])),
       // enable chrome redux debugging extension if available
       dev && window.devToolsExtension ? window.devToolsExtension() : f => f
     )
