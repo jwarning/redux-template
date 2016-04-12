@@ -1,11 +1,6 @@
 import React from 'react'
-import { PureComponent } from 'react-pure-render'
+import { pure } from 'recompose'
 
-export default class AppContainer extends PureComponent {
-  render() {
-    return (
-      <div>
-      </div>
-    )
-  }
-}
+const AppContainer = pure(() => <div></div>)
+
+export default AppContainer
