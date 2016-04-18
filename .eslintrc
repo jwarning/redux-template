@@ -1,5 +1,5 @@
 {
-  "extends": "eslint:recommended",
+  "extends": "airbnb",
   "env": {
     "browser": true,
     "node": true,
@@ -19,23 +19,13 @@
   "parser": "babel-eslint",
   "rules": {
     "comma-dangle": [2, "never"],
-    "eol-last": 2,
-    "eqeqeq": [2, "smart"],
-    "indent": [2, 2, { "SwitchCase": 1 }],
+    "jsx-quotes": ["error", "prefer-single"],
     "no-console": 0,
-    "no-extra-parens": [2, "all"],
-    "no-multi-spaces": 2,
-    "no-multiple-empty-lines": 2,
-    "no-unused-vars": 2,
-    "no-var": 2,
-    "object-curly-spacing": [2, "always"],
-    "quotes": [2, "single", "avoid-escape"],
+    "prefer-template": 0,
     "semi": [2, "never"],
-    "space-before-blocks": [2, "always"],
-    "space-before-function-paren": [2, "never"],
-    "react/jsx-indent-props": [2, 2],
-    "react/jsx-no-undef": 2,
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2
+    "react/jsx-boolean-value": [2, "always"],
+    "react/jsx-closing-bracket-location": 0,
+    "react/prop-types": 0,
+    "react/wrap-multilines": 0
   }
 }
