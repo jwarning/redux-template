@@ -1,0 +1,5 @@
+/* note: this uses precss and cssnext syntax */
+
+#app {
+  min-width: 300px;
+}

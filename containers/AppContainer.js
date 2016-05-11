@@ -1,6 +1,17 @@
-import React from 'react'
-import { pure } from 'recompose'
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { compose, pure, setPropTypes } from 'recompose'
 
-const AppContainer = pure(() => <div></div>)
+const AppContainer = compose(
+  pure,
+  setPropTypes({
+  })
+)(props => {
+  return <div>Hello</div>
+})
 
-export default AppContainer
+function mapStateToProps(state) {
+  return {}
+}
+
+export default connect(mapStateToProps)(AppContainer)

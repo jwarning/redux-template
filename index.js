@@ -1,14 +1,14 @@
 import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { Router, Route, browserHistory } from 'react-router'
+import { AppContainer } from 'react-hot-loader'
+import { browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
+import Root from './containers/Root'
 import rootReducer from './reducers/root'
-import AppContainer from './containers/AppContainer'
 
 import './styles/index.css'
 
@@ -32,10 +32,8 @@ function configureStore(initialState) {
   )
 
   if (module.hot) {
-    // enable webpack hot module replacement for reducers
     module.hot.accept('./reducers/root', () => {
-      const nextRootReducer = require('./reducers/root').default
-      store.replaceReducer(nextRootReducer)
+      store.replaceReducer(require('./reducers/root').default)
     })
   }
 
@@ -45,12 +43,25 @@ function configureStore(initialState) {
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Route path='/' component={AppContainer}>
-      </Route>
-    </Router>
-  </Provider>,
-  document.getElementById('app')
-)
+const rootElement = document.getElementById('app')
+
+function render(RootComponent) {
+  ReactDOM.render(
+    <AppContainer>
+      <RootComponent store={store} history={history} />
+    </AppContainer>,
+    rootElement
+  )
+}
+
+function initialise() {
+  render(Root)
+
+  if (module.hot) {
+    module.hot.accept('./containers/Root', () => {
+      render(require('./containers/Root').default)
+    })
+  }
+}
+
+initialise()

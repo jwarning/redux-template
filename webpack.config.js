@@ -37,7 +37,7 @@ var config = {
         test: /\.js$/,
         loader: 'babel',
         query: {
-          presets: dev ? ['react-hmre'] : []
+          plugins: dev ? ['react-hot-loader/babel'] : []
         },
         exclude: /node_modules/,
         include: __dirname
@@ -52,8 +52,20 @@ var config = {
         test: /\.css$/,
         loader: dev ? 'style-loader!css-loader!postcss-loader' :
           extractText.extract('style-loader', 'css-loader?minimize!postcss-loader'),
+        include: __dirname
+      },
+      {
+        test: /\.png$/,
+        loaders: [
+          'file?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        ],
         exclude: /node_modules/,
         include: __dirname
+      },
+      {
+        test: /\.ttf$/,
+        loader: 'file'
       }
     ]
   }
@@ -61,7 +73,10 @@ var config = {
 
 if (dev) {
   config.devtool = 'cheap-module-eval-source-map'
-  config.entry.push('webpack-hot-middleware/client')
+  config.entry.unshift(
+    'webpack-hot-middleware/client',
+    'react-hot-loader/patch'
+  )
 
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin()

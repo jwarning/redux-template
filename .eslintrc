@@ -19,12 +19,14 @@
   "parser": "babel-eslint",
   "rules": {
     "comma-dangle": [2, "never"],
+    "global-require": 0,
     "jsx-quotes": ["error", "prefer-single"],
     "no-console": 0,
     "prefer-template": 0,
     "semi": [2, "never"],
     "react/jsx-boolean-value": [2, "always"],
     "react/jsx-closing-bracket-location": 0,
+    "react/jsx-first-prop-new-line": 0,
     "react/prop-types": 0,
     "react/wrap-multilines": 0
   }
