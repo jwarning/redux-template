@@ -42,7 +42,6 @@ function configureStore(initialState) {
 
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)
-
 const rootElement = document.getElementById('app')
 
 function render(RootComponent) {
@@ -54,14 +53,10 @@ function render(RootComponent) {
   )
 }
 
-function initialise() {
-  render(Root)
-
-  if (module.hot) {
-    module.hot.accept('./containers/Root', () => {
-      render(require('./containers/Root').default)
-    })
-  }
+if (module.hot) {
+  module.hot.accept('./containers/Root', () => {
+    render(require('./containers/Root').default)
+  })
 }
 
-initialise()
+render(Root)

@@ -18,7 +18,9 @@ var config = {
     publicPath: dev ? '/dist/' : ''
   },
   plugins: [
-    new extractText('bundle.css'),
+    new extractText('bundle.css', {
+      allChunks: true
+    }),
     new htmlWebpackPlugin({
       template: 'index.html',
       hash: true
@@ -36,32 +38,33 @@ var config = {
       {
         test: /\.js$/,
         loader: 'babel',
-        query: {
-          plugins: dev ? ['react-hot-loader/babel'] : []
-        },
-        exclude: /node_modules/,
-        include: __dirname
+        query: { plugins: dev ? ['react-hot-loader/babel'] : [] },
+        exclude: /node_modules/
       },
       {
         test: /\.json$/,
         loader: 'json-loader',
-        exclude: /node_modules/,
-        include: __dirname
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
-        loader: dev ? 'style-loader!css-loader!postcss-loader' :
-          extractText.extract('style-loader', 'css-loader?minimize!postcss-loader'),
-        include: __dirname
+        loader: dev ? 'style-loader!css-loader?modules!postcss-loader' :
+          extractText.extract('style-loader', 'css-loader?modules&minimize!postcss-loader'),
+        exclude: /node_modules|lib/
       },
       {
-        test: /\.png$/,
+        test: /\.css$/,
+        loader: dev ? 'style-loader!css-loader' :
+          extractText.extract('style-loader', 'css-loader?minimize'),
+        include: /node_modules|lib/
+      },
+      {
+        test: /\.(png|svg)$/,
         loaders: [
           'file?hash=sha512&digest=hex&name=[hash].[ext]',
           'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
         ],
-        exclude: /node_modules/,
-        include: __dirname
+        exclude: /node_modules/
       },
       {
         test: /\.ttf$/,

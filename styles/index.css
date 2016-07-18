@@ -1,5 +1,5 @@
-/* note: this uses precss and cssnext syntax */
+/* note: this uses css-modules, precss and cssnext syntax */
 
-#app {
+:global #app {
   min-width: 300px;
 }
